@@ -20,4 +20,4 @@ def book_list_view(request):
 
 def book_detail_view(request, book_id):
     book = Book.objects.get(pk=book_id)
-    return render(request, 'books/book_details.html', {'book': book})
+    return render(request, 'books/book_detail.html', {'book': book})
