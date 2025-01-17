@@ -3,35 +3,42 @@
 
 <link rel="stylesheet" href="{% static 'css/book_detail.css' %}">
 <link rel="stylesheet" href="{% static 'css/book.css' %}">
-<!-- Контент с информацией о книге -->
+
 <div class="container mt-4">
     <div class="book-card">
         <div class="card">
-            <img src="{{book.image.url}}" class="card-img-top" alt="...">
+            {% if book.image %}
+                <img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
+            {% else %}
+                <img src="{% static 'images/default-book.png' %}" class="card-img-top" alt="Изображение отсутствует">
+            {% endif %}
             <div class="card-body">
-                <h5 class="card-title">{{book.title}}</h5>
-                <p class="card-text">{{book.description}}</p>
-                <p><strong>Цена:</strong> {{book.price}}</p>
-                <p><strong>Дата выхода:</strong>{{book.created_at}}</p>
-                <p><strong>Жанр:</strong>{{book.genre}</p>
-                <p><strong>Почта:</strong>{{book.email}}</p>
-                <p><strong>Автор:</strong>{{book.author}}</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text">{{ book.description|linebreaks }}</p>
+                <p><strong>Цена:</strong> {{ book.price }}</p>
+                <p><strong>Дата выхода:</strong> {{ book.created_at }}</p>
+                <p><strong>Жанр:</strong> {{ book.get_genre_display }}</p>
+                <p><strong>Почта:</strong> {{ book.email }}</p>
+                <p><strong>Автор:</strong> {{ book.author }}</p>
+                {% if book.youtube_video_id %}
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/{{ book.youtube_video_id }}" frameborder="0" allowfullscreen></iframe>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    {% for i in book.reviews.all %}
-    <!-- Блок для комментариев -->
-    <div class="comment-section">
-        <h5>Комментарии</h5>
-        <div class="comment">
-            <p> {{ i.created_at }} : {{ i.comment }} <strong> Оценка:</strong>{{ i.stars }}</p>
+    {% if book.reviews.exists %}
+        <div class="comment-section">
+            <h5>Комментарии</h5>
+            {% for i in book.reviews.all %}
+            <div class="comment">
+                <p>{{ i.created_at }}: {{ i.comment }} <strong>Оценка:</strong> {{ i.stars }}</p>
+            </div>
+            {% endfor %}
         </div>
-     
-    </div>
-    {% endfor %}
+    {% else %}
+        <p>Отзывов пока нет.</p>
+    {% endif %}
 </div>
 
-<!-- Футер -->
 {% include 'components/footer.html' %}

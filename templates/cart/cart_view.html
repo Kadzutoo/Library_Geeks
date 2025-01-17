@@ -1,0 +1,24 @@
+{% load static %}
+
+{% include 'components/header.html' %}
+
+<div class="container mt-4">
+  <h2>Корзина</h2>
+
+  {% if cart.items.all %}
+    <ul>
+      {% for item in cart.items.all %}
+        <li>
+          {{ item.product.title }} - {{ item.quantity }} x {{ item.product.price }} = {{ item.total_price }}
+          <a href="{% url 'remove_from_cart' item.id %}">Удалить</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p><strong>Итого:</strong> {{ cart.total_price }}</p>
+  {% else %}
+    <p>Ваша корзина пуста.</p>
+  {% endif %}
+</div>
+
+{% include 'components/footer.html' %}

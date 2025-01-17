@@ -1,14 +1,14 @@
 from django.db import models
 
-
 class Book(models.Model):
     GENRE_CHOICE = (
         ('Ужасы', 'Ужасы'),
         ('Фантастика', 'Фантастика'),
         ('Комедия', 'Комедия'),
         ('Драма', 'Драма'),
+        ('Приключение', 'Приключение'),
     )
-    image = models.ImageField(upload_to='books/', verbose_name='Изобрвжение', null=True, blank=True)
+    image = models.ImageField(upload_to='books/', verbose_name='Изображение', null=True, blank=True)
     title = models.CharField(max_length=100, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Цена')
@@ -19,6 +19,9 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_genre_display(self):
+        return dict(self.GENRE_CHOICE).get(self.genre, self.genre)
 
     class Meta:
         verbose_name = "Книга"
@@ -43,4 +46,4 @@ class Review(models.Model):
 
     class Meta:
         verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
