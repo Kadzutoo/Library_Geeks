@@ -1,24 +1,17 @@
-{% load static %}
-
-{% include 'components/header.html' %}
-
-<div class="container mt-4">
-  <h2>Корзина</h2>
-
-  {% if cart.items.all %}
-    <ul>
-      {% for item in cart.items.all %}
+<h1>Shopping Cart</h1>
+<ul>
+    {% for item in cart_items %}
         <li>
-          {{ item.product.title }} - {{ item.quantity }} x {{ item.product.price }} = {{ item.total_price }}
-          <a href="{% url 'remove_from_cart' item.id %}">Удалить</a>
+            {{ item.product.name }} - ${{ item.product.price }} x {{ item.quantity }} = ${{ item.total_price }}
+            <form action="{% url 'remove_from_cart' item.product.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Remove</button>
+            </form>
         </li>
-      {% endfor %}
-    </ul>
-
-    <p><strong>Итого:</strong> {{ cart.total_price }}</p>
-  {% else %}
-    <p>Ваша корзина пуста.</p>
-  {% endif %}
-</div>
-
-{% include 'components/footer.html' %}
+    {% endfor %}
+</ul>
+<p>Total: ${{ total_price }}</p>
+<a href="/products/">Continue Shopping</a>
+<p>Added to cart!</p>
+<a href="{% url 'cart_view' %}">Go to Cart</a>
+<a href="/products/">Continue Shopping</a>

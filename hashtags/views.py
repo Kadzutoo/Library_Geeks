@@ -1,20 +1,23 @@
-from django.shortcuts import render
-from .models import Tag, Product
+from django.views.generic import ListView
+from .models import Product
 
+class AllProductsView(ListView):
+    model = Product
+    template_name = 'products.html'
+    context_object_name = 'products'
 
-def all_products(request):
-    if request.method == 'GET':
-       products = Product.objects.all()
-       return render(request, 'products.html', {'products': products})
+class MaleProductsView(ListView):
+    model = Product
+    template_name = 'products.html'
+    context_object_name = 'products'
 
+    def get_queryset(self):
+        return Product.objects.filter(tag__name='Male')
 
-def male_products(request):
-    if request.method == 'GET':
-        products = Product.objects.filter(tag__name='Male')
-        return render(request, 'products.html', {'products': products})
+class FemaleProductsView(ListView):
+    model = Product
+    template_name = 'products.html'
+    context_object_name = 'products'
 
-
-def female_products(request):
-    if request.method == 'GET':
-        products = Product.objects.filter(tag__name='Female')
-        return render(request, 'products.html', {'products': products})
+    def get_queryset(self):
+        return Product.objects.filter(tag__name='Female')

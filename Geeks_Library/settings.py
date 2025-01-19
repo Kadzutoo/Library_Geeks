@@ -30,7 +30,8 @@ INSTALLED_APPS = [
 
     'library',
     'hashtags',
-    'shop',
+    'cart',
+
 ]
 
 MIDDLEWARE = [

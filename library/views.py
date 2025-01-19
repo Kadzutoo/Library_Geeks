@@ -1,23 +1,45 @@
+from lib2to3.fixes.fix_input import context
+
 from django.http import HttpResponse
-from django.shortcuts import render
-import datetime
+from django.views import View
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Book
+import datetime
+from django.views.generic import ListView
 
 
-def about_me(request):
-    return HttpResponse("My names Argen")
+#serach
+class SearchView(ListView):
+    template_name = 'books/book.html'  # Corrected template path
+    context_object_name = 'book_list'
 
-def about_my_pet(request):
-    return render(request, 'about_my_pet.html')
+    def get_queryset(self):
+        return Book.objects.filter(title__icontains=self.request.GET.get('q'))
 
-def current_time(request):
-    return HttpResponse(datetime.datetime.now())
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q')
+        return context
 
-def book_list_view(request):
-    if request.method == 'GET':
-        books_list = Book.objects.all()
-        return render(request, 'books/book.html', {'books_list': books_list})
 
-def book_detail_view(request, book_id):
-    book = Book.objects.get(pk=book_id)
-    return render(request, 'books/book_detail.html', {'book': book})
+
+class AboutMeView(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("My name is Argen")
+
+class AboutMyPetView(TemplateView):
+    template_name = 'about_my_pet.html'
+
+class CurrentTimeView(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(datetime.datetime.now())
+
+class BookListView(ListView):
+    model = Book
+    template_name = 'books/book.html'
+    context_object_name = 'books_list'
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'books/book_detail.html'
+    context_object_name = 'book'
