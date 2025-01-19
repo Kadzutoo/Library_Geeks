@@ -7,6 +7,7 @@ class Book(models.Model):
         ('Комедия', 'Комедия'),
         ('Драма', 'Драма'),
         ('Приключение', 'Приключение'),
+        ('Боевик', 'Боевик'),
     )
     image = models.ImageField(upload_to='books/', verbose_name='Изображение', null=True, blank=True)
     title = models.CharField(max_length=100, verbose_name='Название')
