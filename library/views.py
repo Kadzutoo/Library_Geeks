@@ -11,7 +11,7 @@ from django.views.generic import ListView
 #serach
 class SearchView(ListView):
     template_name = 'books/book.html'  # Corrected template path
-    context_object_name = 'book_list'
+    context_object_name = 'books_list'
 
     def get_queryset(self):
         return Book.objects.filter(title__icontains=self.request.GET.get('q'))
