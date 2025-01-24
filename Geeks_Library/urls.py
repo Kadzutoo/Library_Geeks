@@ -8,5 +8,6 @@ urlpatterns = [
     path('', include ('library.urls')),
     path('', include('hashtags.urls')),
     path('cart/', include('cart.urls')),
+    path('', include('parser_kinogo.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

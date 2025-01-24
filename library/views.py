@@ -8,7 +8,7 @@ import datetime
 from django.views.generic import ListView
 
 
-#serach
+#search
 class SearchView(ListView):
     template_name = 'books/book.html'  # Corrected template path
     context_object_name = 'books_list'
