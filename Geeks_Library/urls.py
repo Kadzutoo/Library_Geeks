@@ -9,5 +9,6 @@ urlpatterns = [
     path('', include('hashtags.urls')),
     path('cart/', include('cart.urls')),
     path('', include('parser_kinogo.urls')),
+    path('', include('recipes.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

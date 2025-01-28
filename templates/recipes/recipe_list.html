@@ -1,0 +1,7 @@
+{% for recipe in recipes %}
+    <h2>{{ recipe.title }}</h2>
+    <p>{{ recipe.description }}</p>
+    <a href="{% url 'recipe_detail' recipe.id %}">Просмотреть</a>
+    <a href="{% url 'delete_recipe' recipe.id %}">Удалить</a>
+{% endfor %}
+<a href="{% url 'add_recipe' %}">Добавить новый рецепт</a>

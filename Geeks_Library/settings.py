@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'hashtags',
     'cart',
     'parser_kinogo',
+    'recipes'
 ]
 
 MIDDLEWARE = [

@@ -20,6 +20,6 @@ class KinoogoFormView(generic.FormView):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.parser_data()
-            return HttpResponse('Персинг успешно завершен')
+            return HttpResponse('Парсинг успешно завершен')
         else:
             return super(KinoogoFormView, self).post(request, *args, **kwargs)
